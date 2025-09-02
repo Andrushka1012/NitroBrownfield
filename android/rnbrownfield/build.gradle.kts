@@ -110,9 +110,9 @@ tasks.matching { it.name.startsWith("assemble") }.configureEach {
 publishing {
     publications {
         create<MavenPublication>("mavenAar") {
-            groupId = "com.box"
+            groupId = "com.nitro"
             artifactId = "rnbrownfield"
-            version = "0.0.1-local"
+            version = "1.0.0"
             afterEvaluate {
                 from(components.getByName("release"))
             }
@@ -178,9 +178,9 @@ dependencies {
     api("com.facebook.react:react-android:0.79.3")
     api("com.facebook.react:hermes-android:0.79.3")
 
-    // Nitro modules - use compileOnly since native libs are already copied to AAR
-    compileOnly(project(":react-native-nitro-modules"))
-    compileOnly(project(":react-native-math"))
+    // // Nitro modules - use compileOnly since native libs are already copied to AAR
+    // compileOnly(project(":react-native-nitro-modules"))
+    // compileOnly(project(":react-native-math"))
 
     // External dependencies that consumer apps need
     api("androidx.biometric:biometric:1.1.0")
