@@ -1,0 +1,10 @@
+{
+  "uiViewClassName": "CameraView",
+  "supportsRawText": false,
+  "bubblingEventTypes": {},
+  "directEventTypes": {},
+  "validAttributes": {
+    "enableFlash": true,
+    "hybridRef": true
+  }
+}

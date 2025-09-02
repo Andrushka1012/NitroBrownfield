@@ -1,0 +1,33 @@
+buildscript {
+    ext {
+        buildToolsVersion = "35.0.0"
+        minSdkVersion = 27
+        compileSdkVersion = 35
+        targetSdkVersion = 35
+        ndkVersion = "27.1.12297006"
+        kotlinVersion = "2.0.21"
+    }
+    repositories {
+        google()
+        mavenCentral()
+        maven { // (4)
+            url("$rootDir/../node_modules/detox/Detox-android")
+        }
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        classpath("com.callstack.react:brownfield-gradle-plugin:0.3.0")
+    }
+}
+
+allprojects {
+    repositories {
+        maven {
+            url "$rootDir/../node_modules/detox/Detox-android"
+        }
+    }
+}
+
+apply plugin: "com.facebook.react.rootproject"
