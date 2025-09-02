@@ -1,42 +1,51 @@
 # React Native Brownfield with Nitro + RNEF Example
 
-This project demonstrates a React Native brownfield implementation using **Nitro modules** and **RNEF** (new name Rock) that showcases C++ library packaging issues in AAR builds.
+This project demonstrates a React Native brownfield implementation using **Nitro modules** and **RNEF** (React Native Embedded Framework) that showcases CMake configuration and C++ library packaging issues in AAR builds.
 
 ## Project Overview
 
 This example project illustrates the integration of:
-- **React Native 0.79.2** with New Architecture
-- **Nitro modules** for high-performance native code execution
-- **RNEF (React Native Embedded Framework)** for brownfield deployment
-- **C++ native libraries** with build and packaging challenges
+- **React Native 0.79.2** with New Architecture enabled
+- **Nitro modules** for high-performance native code execution with C++ bindings
+- **RNEF** (now known as Rock) for brownfield deployment and AAR packaging
+- **CMake build system** with native library dependencies
+
+### What is Brownfield Development?
+
+Brownfield development refers to integrating React Native into existing native Android applications as a library (AAR) rather than as a standalone app. This approach allows teams to:
+- Add React Native features to existing native apps
+- Maintain existing native infrastructure
+- Gradually migrate features to React Native
+- Package React Native as a reusable component
 
 ### Running the App
 
 ```bash
+# Install dependencies
+npm install
+
+# Run on Android (standard React Native)
 npx react-native run-android
 ```
 
-## The C++ Library Issue
+## The CMake Configuration Issue
 
-This project demonstrates a specific issue with C++ native libraries when building AAR packages for brownfield deployment.
+This project demonstrates a critical issue with **Nitro module CMake configuration** when building AAR packages for brownfield deployment.
+
+### Issue Summary
+
+Nitro's code generator creates CMake files that use `find_package(react-native-nitro-modules REQUIRED)`, which fails in brownfield builds
 
 ### Reproducing the Issue
 
-To reproduce the C++ library packaging issue, run:
-
+#### Step 1: Generate Nitro Code
 ```bash
-npx rnef package:aar --variant Release --module-name rnbrownfield
+# Generate Nitro module code (this works fine)
+npx nitro-codegen
 ```
 
-### Problem Description
-
-The issue occurs when:
-1. Nitro modules contain C++ libraries (`libNitroMath.so`)
-2. These libraries need to be properly packaged in the AAR
-3. The build system struggles with:
-   - Correct library path resolution
-   - Proper inclusion in the final AAR package
-   - Architecture-specific library handling (arm64-v8a, armeabi-v7a, x86, x86_64)
-
-### Current Workaround
-
+#### Step 2: Attempt Brownfield Build
+```bash
+# This will fail with CMake errors
+npx rnef package:aar --variant Release --module-name rnbrownfield
+```
