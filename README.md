@@ -25,6 +25,7 @@ Brownfield development refers to integrating React Native into existing native A
 npm install
 
 # Run on Android (standard React Native)
+# Android app will work
 npx react-native run-android
 ```
 
@@ -41,6 +42,7 @@ Nitro's code generator creates CMake files that use `find_package(react-native-n
 #### Step 1: Generate Nitro Code
 ```bash
 # Generate Nitro module code (this works fine)
+cd react-native-math 
 npx nitro-codegen
 ```
 
@@ -49,3 +51,5 @@ npx nitro-codegen
 # This will fail with CMake errors
 npx rnef package:aar --variant Release --module-name rnbrownfield
 ```
+
+

@@ -58,31 +58,14 @@ add_definitions(-DBUILDING_NITROMATH_WITH_GENERATED_CMAKE_PROJECT)
 # Add all libraries required by the generated specs
 find_package(fbjni REQUIRED) # <-- Used for communication between Java <-> C++
 find_package(ReactAndroid REQUIRED) # <-- Used to set up React Native bindings (e.g. CallInvoker/TurboModule)
-
-# Add NitroModules includes manually
-target_include_directories(NitroMath PRIVATE
-    "../../node_modules/react-native-nitro-modules/android/build/headers/nitromodules"
-)
-
-# Define NitroModules library path based on build mode
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(NITRO_BUILD_MODE "release")
-else()
-    set(NITRO_BUILD_MODE "debug")
-endif()
-
-# Use imported library approach
-add_library(NitroModulesImported SHARED IMPORTED)
-set_target_properties(NitroModulesImported PROPERTIES
-    IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/react-native-nitro-modules/android/build/intermediates/prefab_package/${NITRO_BUILD_MODE}/prefab/modules/NitroModules/libs/android.${ANDROID_ABI}/libNitroModules.so"
-)
+find_package(react-native-nitro-modules REQUIRED) # <-- Used to create all HybridObjects and use the Nitro core library
 
 # Link all libraries together
 target_link_libraries(
         NitroMath
         fbjni::fbjni                              # <-- Facebook C++ JNI helpers
         ReactAndroid::jsi                         # <-- RN: JSI
-        NitroModulesImported                      # <-- NitroModules library
+        react-native-nitro-modules::NitroModules  # <-- NitroModules Core :)
 )
 
 # Link react-native (different prefab between RN 0.75 and RN 0.76)
